@@ -36,7 +36,7 @@ if __name__=='__main__':
 
 
         batch_size = args.batch_size
-        fnames     = glob.glob(args.train_data_path + '\\*.JPG')
+        fnames     = glob.glob(args.train_data_path + '*.JPG')
         
         dataset = tf.data.Dataset.from_tensor_slices(fnames).shuffle(len(fnames))
         filename_queue = iter(dataset)
