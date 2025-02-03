@@ -4,7 +4,7 @@ import random
 import os
 import math
 import numpy as np
-from tensorflow.contrib.framework.python.ops import add_arg_scope
+#from tensorflow.contrib.framework.python.ops import add_arg_scope
 
 def random_interpolates(x, y, alpha=None):
     """
