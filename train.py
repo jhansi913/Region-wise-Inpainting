@@ -37,11 +37,7 @@ if __name__=='__main__':
 
         batch_size = args.batch_size
         fnames     = glob.glob(args.train_data_path + '*.jpg')
-        print("Training data path:", args.train_data_path)
-        print("Found files:", fnames)
-        if not fnames:
-                print("Error: No .jpg files found in", args.train_data_path)
-                exit(1)
+         
         
   
         dataset = tf.data.Dataset.from_tensor_slices(fnames).shuffle(len(fnames))
