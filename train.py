@@ -38,9 +38,9 @@ if __name__=='__main__':
         batch_size = args.batch_size
         fnames     = glob.glob(args.train_data_path + '*.jpg')
         
-        #dataset = tf.data.Dataset.from_tensor_slices(fnames).shuffle(len(fnames))
-        #filename_queue = iter(dataset)
-        filename_queue = tf.train.string_input_producer(fnames, shuffle = True)
+        dataset = tf.data.Dataset.from_tensor_slices(fnames).shuffle(len(fnames))
+        filename_queue = iter(dataset)
+        #filename_queue = tf.train.string_input_producer(fnames, shuffle = True)
         reader = tf.WholeFileReader()
         _,img_bytes = reader.read(filename_queue)
         images = tf.image.decode_jpeg(img_bytes, channels = 3)
