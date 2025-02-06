@@ -12,7 +12,7 @@ from mask_online import *
 import argparse
 
 if __name__=='__main__':
-        tf.compat.v1.disable_eager_execution()
+       # tf.compat.v1.disable_eager_execution()
         parser = argparse.ArgumentParser(description='training code')
         parser.add_argument('--train_data_path',type=str ,default="" ,help='training data path')
         parser.add_argument('--epoch',type=int ,default=20 ,help='training epoch')
