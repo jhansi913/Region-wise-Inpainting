@@ -11,6 +11,8 @@ from inpaint_model import *
 from mask_online import *
 import argparse
 
+ 
+
 if __name__=='__main__':
        # tf.compat.v1.disable_eager_execution()
         parser = argparse.ArgumentParser(description='training code')
@@ -38,6 +40,7 @@ if __name__=='__main__':
 
         batch_size = args.batch_size
         fnames     = glob.glob(args.train_data_path + '*.jpg')
+       
          
         
   
