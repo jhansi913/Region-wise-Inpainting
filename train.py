@@ -12,6 +12,7 @@ from mask_online import *
 import argparse
 
 if __name__=='__main__':
+        tf.compat.v1.disable_eager_execution()
         parser = argparse.ArgumentParser(description='training code')
         parser.add_argument('--train_data_path',type=str ,default="" ,help='training data path')
         parser.add_argument('--epoch',type=int ,default=20 ,help='training epoch')
@@ -43,12 +44,12 @@ if __name__=='__main__':
         dataset = tf.data.Dataset.from_tensor_slices(fnames).shuffle(len(fnames))
         filename_queue = iter(dataset)
         #filename_queue = tf.train.string_input_producer(fnames, shuffle = True)
-        reader = tf.io.read_file()
+        reader = tf.io.read_file(filename_queue)
         _,img_bytes = reader.read(filename_queue)
         images = tf.image.decode_jpeg(img_bytes, channels = 3)
-        images = tf.image.resize_images(images,[args.height, args.width])
+        images = tf.image.resize(images,[args.height, args.width])
         images = tf.train.batch([images],batch_size, dynamic_pad = True)
-        mask   = tf.placeholder(tf.float32,[batch_size, args.height, args.width, 1], name = 'mask')
+        mask   = tf.compat.v1.placeholder(tf.float32,[batch_size, args.height, args.width, 1], name = 'mask')
 
         sess = tf.Session()
         if args.stage == 0:
