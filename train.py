@@ -11,6 +11,11 @@ from inpaint_model import *
 from mask_online import *
 import argparse
 
+def preprocess_image(filename):
+    img_bytes = tf.io.read_file(filename)
+    image = tf.image.decode_jpeg(img_bytes, channels=3)
+    image = tf.image.resize(image, [args.height, args.width])
+    return image
  
 
 if __name__=='__main__':
@@ -42,16 +47,14 @@ if __name__=='__main__':
         fnames     = glob.glob(args.train_data_path + '*.jpg')
        
          
-        
-        
-        dataset = tf.data.Dataset.from_tensor_slices(fnames).shuffle(len(fnames))
+        dataset = tf.data.Dataset.from_tensor_slices(filename_queue)
+        dataset = dataset.map(preprocess_image, num_parallel_calls=tf.data.AUTOTUNE)
+        dataset = dataset.batch(batch_size).prefetch(tf.data.AUTOTUNE)
+
+# Iterator for fetching batches
         iterator = iter(dataset)
-        filename = next(iterator)  # Get the actual filename from the iterator
-        img_bytes = tf.io.read_file(filename)
-        
-        images = tf.image.decode_jpeg(img_bytes, channels = 3)
-        images = tf.image.resize(images,[args.height, args.width])
-        images = tf.train.batch([images],batch_size, dynamic_pad = True)
+        images = next(iterator)
+         
         mask   = tf.compat.v1.placeholder(tf.float32,[batch_size, args.height, args.width, 1], name = 'mask')
 
         sess = tf.Session()
