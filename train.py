@@ -47,7 +47,7 @@ if __name__=='__main__':
         fnames     = glob.glob(args.train_data_path + '*.jpg')
        
          
-        dataset = tf.data.Dataset.from_tensor_slices(filename_queue)
+        dataset = tf.data.Dataset.from_tensor_slices(fnames)
         dataset = dataset.map(preprocess_image, num_parallel_calls=tf.data.AUTOTUNE)
         dataset = dataset.batch(batch_size).prefetch(tf.data.AUTOTUNE)
 
