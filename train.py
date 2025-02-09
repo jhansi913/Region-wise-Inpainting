@@ -55,7 +55,8 @@ if __name__=='__main__':
         iterator = iter(dataset)
         images = next(iterator)
          
-        mask   = tf.compat.v1.placeholder(tf.float32,[batch_size, args.height, args.width, 1], name = 'mask')
+        mask = tf.Variable(tf.zeros([batch_size, args.height, args.width, 1], dtype=tf.float32), name="mask")
+
 
         sess = tf.Session()
         if args.stage == 0:
