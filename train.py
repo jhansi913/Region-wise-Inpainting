@@ -45,10 +45,9 @@ if __name__=='__main__':
         
         
         dataset = tf.data.Dataset.from_tensor_slices(fnames).shuffle(len(fnames))
-        filename_queue = iter(dataset)
-        #filename_queue = tf.train.string_input_producer(fnames, shuffle = True)
- 
-        reader = tf.io.read_file(filename_queue)
+        iterator = iter(dataset)
+        filename = next(iterator)  # Get the actual filename from the iterator
+        reader = tf.io.read_file(filename)
         _,img_bytes = reader.read(filename_queue)
         images = tf.image.decode_jpeg(img_bytes, channels = 3)
         images = tf.image.resize(images,[args.height, args.width])
