@@ -47,8 +47,8 @@ if __name__=='__main__':
         dataset = tf.data.Dataset.from_tensor_slices(fnames).shuffle(len(fnames))
         iterator = iter(dataset)
         filename = next(iterator)  # Get the actual filename from the iterator
-        reader = tf.io.read_file(filename)
-        _,img_bytes = reader.read(filename)
+        img_bytes = tf.io.read_file(filename)
+        
         images = tf.image.decode_jpeg(img_bytes, channels = 3)
         images = tf.image.resize(images,[args.height, args.width])
         images = tf.train.batch([images],batch_size, dynamic_pad = True)
